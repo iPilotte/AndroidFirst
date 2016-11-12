@@ -1,9 +1,11 @@
 package kku03.chai.waya.training;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,9 +20,9 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText nameEditText, phoneEditText, userEditText, passwordEditText;
     private ImageView imageView;
     private Button button;
-    private String nameString, phoneString, userString, passwordString;
+    private String nameString, phoneString, userString, passwordString, imagePathString, imageNameString;
     private Uri uri;
-
+    private Boolean aBoolean = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +52,17 @@ public class SignUpActivity extends AppCompatActivity {
                 //CheckSpace
                 if (nameString.equals("") || phoneString.equals("") || userString.equals("") || passwordString.equals("")) {
                     //Have Space
-                    Log.d("12novV1" , "Have Space");
+                    Log.d("12novV1", "Have Space");
                     MyAlert myAlert = new MyAlert(SignUpActivity.this, R.drawable.bird48, "ERROR", "NO SPACE");
                     myAlert.myDialog();
+                } else if(aBoolean) {
+
+                    MyAlert myAlert = new MyAlert(SignUpActivity.this, R.drawable.kon48, "ERROR", "NO IMAGE");
+                    myAlert.myDialog();
+
+                } else {
+                    uploadImageToServer();
+
                 }
 
             } //Onclick
@@ -74,6 +84,10 @@ public class SignUpActivity extends AppCompatActivity {
 
     } //Main Method
 
+    private void uploadImageToServer() {
+
+    }
+
     //After Choose image
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -81,7 +95,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         if ((requestCode == 0) && (resultCode == RESULT_OK)) {
             Log.d("12NovV1", "Result ok");
-
+            aBoolean = false;
             //Show image
             uri = data.getData();
             try {
@@ -93,7 +107,36 @@ public class SignUpActivity extends AppCompatActivity {
                 ex.printStackTrace();
             }
 
+
+            //Find path of image
+            imagePathString = myFindPath(uri);
+            Log.d("12novV1" , "Path " + imagePathString);
+
+            //Find image name
+            imageNameString = imagePathString.substring(imagePathString.lastIndexOf("/")+1);
+            Log.d("12novV1", "Name " + imageNameString);
+
         }   //if
 
+    }
+
+    private String myFindPath(Uri uri) {
+
+        String result = null;
+        String[] strings = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(uri, strings, null, null, null);
+
+        if (cursor != null) {
+
+            cursor.moveToFirst();
+            int index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            result = cursor.getString(index);
+
+        } else {
+
+            result = uri.getPath();
+        }
+
+        return result;
     }
 } //Main Class
