@@ -1,5 +1,6 @@
 package kku03.chai.waya.training;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -52,5 +53,31 @@ public class SignUpActivity extends AppCompatActivity {
             } //Onclick
         });
 
+        //Image Controller
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT); //Process on other program and call back
+                intent.setType("image/*");
+                startActivityForResult(Intent.createChooser(intent, "CHOOSE APPLICATION"), 0);
+
+            } //onClick
+        });
+
+
     } //Main Method
+
+    //After Choose image
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if ((requestCode == 0) && (resultCode == RESULT_OK)) {
+            Log.d("12NovV1", "Result ok");
+
+
+        }   //if
+
+    }
 } //Main Class
