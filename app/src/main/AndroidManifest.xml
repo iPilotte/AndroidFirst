@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="kku03.chai.waya.training">
 
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -23,7 +24,10 @@
         <activity
             android:name=".SignUpActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ServiceActivity" android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".ServiceActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".SplashScreenActivity"></activity>
     </application>
 
 </manifest>
