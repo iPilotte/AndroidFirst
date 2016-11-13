@@ -134,7 +134,8 @@ public class SignUpActivity extends AppCompatActivity {
                 Request.Builder builder = new Request.Builder();
                 Request request = builder.url(params[0]).post(requestBody).build();
                 Response response = okHttpClient.newCall(request).execute();
-                return response.body().toString();
+                //Log.d("Error : ", "RegistUser // doInBack try : " + response.body().toString());
+                return response.body().string();
 
             } catch (Exception ex) {
                 Log.d("13novV1", "e data : " + ex.toString());
