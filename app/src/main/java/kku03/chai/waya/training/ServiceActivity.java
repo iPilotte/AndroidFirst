@@ -52,7 +52,7 @@ public class ServiceActivity extends AppCompatActivity {
         builder.setCancelable(false);
         builder.setIcon(R.drawable.bird48);
         builder.setTitle("Please confirm");
-        builder.setMessage("คุณต้องการโทรหา " + nameString + "จริหรือไม่");
+        builder.setMessage("คุณต้องการโทรหา " + nameString + "จริงหรือไม่");
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
